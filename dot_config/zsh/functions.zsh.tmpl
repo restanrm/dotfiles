@@ -74,7 +74,9 @@ function sf() {
 # openstack context change function
 unset OS_CLOUD
 osctx () {
-  source <(gopass ls --flat | grep openrc.sh | rofi -dmenu | xargs --no-run-if-empty gopass show -n)
+  local args=$1
+  source <(gopass ls --flat | grep openrc.sh | fzf --query "${args} " --select-1 --exit-0 | xargs --no-run-if-empty gopass show -n)
+  #source <(gopass ls --flat | grep openrc.sh | rofi -dmenu | xargs --no-run-if-empty gopass show -n)
 }
 {{- end }}
 
