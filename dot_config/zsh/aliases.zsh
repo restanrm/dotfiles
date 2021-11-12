@@ -44,6 +44,7 @@ alias -g T='tail'
 alias k=kubectl
 which kubens >/dev/null && alias kns=kubens
 alias ks="kubectl --namespace kube-system"
-alias ko="kubectl get pods -A -o wide | egrep -vi "running|completed"'
+alias ko="kubectl get pods -A -o wide | egrep -vi 'running|completed'"
+alias os=openstack
 
 alias sway='XKB_DEFAULT_LAYOUT=fr XKB_DEFAULT_VARIANT=bepo sway'
