@@ -1,5 +1,9 @@
 font:
+  {{- if eq .chezmoi.hostname "intercepteur" }}
+  size: 10
+  {{- else }}
   size: 9
+  {{- end }}
 
 key_bindings:
   - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
