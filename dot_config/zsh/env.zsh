@@ -1,5 +1,5 @@
 # ---[ Environment ]-----------------------------------------------------
-export EDITOR='vim -p'
+export EDITOR='nvim'
 export GOPATH=$HOME/.go
 #
 # Manpath & Manualpage search order
