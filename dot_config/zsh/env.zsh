@@ -26,9 +26,11 @@ export BELL_ADDRESS="https://bell.restanrm.fr"
 
 # Work related env vars
 
+{{- if .work }}
 export VAULT_ADDR=https://vault.delivery.sekoia.io
 export PULL_REGISTRY=registry.sekoia.io
 export PUSH_REGISTRY=registry.sekoia.io
 export RELEASE_ID=latest
 export PLATFORM=dev
+{{- end }}
 
