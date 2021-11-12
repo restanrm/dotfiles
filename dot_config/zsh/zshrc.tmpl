@@ -1,0 +1,26 @@
+if [ ! -d /tmp/nrm ]; then 
+	mkdir /tmp/nrm 2>/dev/null 
+fi
+
+
+{{- if ne .type "container" }
+if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then 
+	exec sway
+fi
+
+	export MOZ_ENABLE_WAYLAND=1
+
+	eval "$(direnv hook zsh)"
+	export BELL_ADDRESS="https://bell.restanrm.fr"
+{{- end }}
+
+
+source ~/.config/zsh/functions.zsh
+source ~/.config/zsh/env.zsh
+source ~/.config/zsh/aliases.zsh
+
+
+source <(gopass completion zsh)
+source <(kubectl completion zsh)
+source <(minikube completion zsh)
+

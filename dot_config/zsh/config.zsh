@@ -1,0 +1,173 @@
+
+
+# --[ Display settings ]------------------------------------------------
+autoload -Uz promptinit
+ promptinit; prompt adam2
+#. ~/.zshprompt; setprompt
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+# ---[ System settings ]------------------------------------------------
+limit -s coredumpsize 0
+umask 0002
+
+# ---[ ZSH Options ]----------------------------------------------------
+# General
+setopt   ALWAYS_TO_END BASH_AUTO_LIST NO_BEEP CLOBBER
+setopt   AUTO_CD MULTIOS CORRECT
+
+# Job Control
+setopt   CHECK_JOBS NO_HUP
+
+# History
+setopt   INC_APPEND_HISTORY EXTENDED_HISTORY HIST_IGNORE_DUPS HIST_FIND_NO_DUPS
+setopt	 EXTENDED_HISTORY HIST_EXPIRE_DUPS_FIRST
+setopt   HIST_REDUCE_BLANKS HIST_SAVE_NO_DUPS
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.history
+DIRSTACKSIZE=20
+
+# Stay compatible to sh and IFS
+setopt	 SH_WORD_SPLIT
+
+setopt   notify globdots pushdtohome
+setopt   recexact longlistjobs
+setopt   autoresume pushdsilent
+setopt   extendedglob autopushd pushdminus rcquotes mailwarning pushd_ignore_dups
+unsetopt BG_NICE HUP autoparamslash
+
+# Don't expand files matching:
+fignore=(\~ .old .pro)
+
+# Colored completion
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+alias ls="ls --color=auto"
+
+
+# ---[ Key bindings ]--------------------------------------------------
+bindkey "^u" vi-kill-line
+bindkey "^[[3~" delete-char
+bindkey '\eq' push-line-or-edit
+bindkey '^p' history-search-backward
+bindkey "^[[3A"  history-beginning-search-backward
+bindkey "^[[3B"  history-beginning-search-forward
+bindkey -s '^B' " &\n"
+
+# ---[ Shell functions ]-----------------------------------------------
+setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
+freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
+# Simple commandline calculator
+function calc () {
+    awk "BEGIN { print $@ }"
+}
+cwc() { sed -e '/^\s*#/d' -e '/^\s*$/d' $* }
+pdfsplit() { gs -sDEVICE=pdfwrite -q -dNOPAUSE -dBATCH -sOutputFile="$4" -dFirstPage="$2" -dLastPage="$3" "$1" }
+pdfjoin() { gs -sDEVICE=pdfwrite -q -dNOPAUSE -sOutputFile="$1" -dBATCH $argv[2,$#] }
+#fatsplit() { split -b $[(1<<(8*4))-1] --filter 'cat >'"${2=.}/"\$FILE "$1" "`basename "$1"`". }
+sublocate () { locate $* | sed -n "/^${PWD//\//\\/}/p"; }
+function f () {
+		q="*$1*"
+		find . -iname $q
+}
+i3prop() { xprop | egrep "CLASS|ROLE" }
+susp() { i3lock && s pm-suspend }
+title() { echo -ne "\033];$@\007"; }
+
+# ---[ Terminal settings ]---------------------------------------------
+case "$TERM" in
+	linux)
+		bindkey '\e[1~' beginning-of-line	# Home
+		bindkey '\e[4~' end-of-line		# End
+		bindkey '\e[3~' delete-char		# Del
+		bindkey '\e[2~' overwrite-mode		# Insert
+		;;
+	screen)
+		# In Linux console
+		bindkey '\e[1~' beginning-of-line	# Home
+		bindkey '\e[4~' end-of-line		# End
+		bindkey '\e[3~' delete-char		# Del
+		bindkey '\e[2~' overwrite-mode		# Insert
+		bindkey '\e[7~' beginning-of-line	# home
+		bindkey '\e[8~' end-of-line		# end
+		# In rxvt
+		bindkey '\eOc' forward-word		# ctrl cursor right
+		bindkey '\eOd' backward-word		# ctrl cursor left
+		bindkey '\e[3~' backward-delete-char	# This should not be necessary!
+		setxkbmap fr -variant bepo
+		;;
+	rxvt*)
+		bindkey '\e[7~' beginning-of-line	# home
+		bindkey '\e[8~' end-of-line		# end
+		bindkey '\eOc' forward-word		# ctrl cursor right
+		bindkey '\eOd' backward-word		# ctrl cursor left
+		bindkey '\e[3~' delete-char	# This should not be necessary!
+		bindkey '\e[2~' overwrite-mode		# Insert
+		setxkbmap fr -variant bepo
+		;;
+	xterm*)
+		bindkey "\e[1~" beginning-of-line	# Home
+		bindkey "\e[4~" end-of-line		# End
+		bindkey '\e[3~' delete-char		# Del
+		bindkey '\e[2~' overwrite-mode		# Insert
+		setxkbmap fr -variant bepo
+		;;
+	sun)
+		bindkey '\e[214z' beginning-of-line       # Home
+		bindkey '\e[220z' end-of-line             # End
+		bindkey '^J'      delete-char             # Del
+		bindkey '^H'      backward-delete-char    # Backspace
+		bindkey '\e[247z' overwrite-mode          # Insert
+		;;
+esac
+
+
+# ---[ Completition system ]-------------------------------------------
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' completer _expand _complete _approximate
+zstyle ':completion:*' format '%d:'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*'
+#zstyle ':completion:*' max-errors 3
+#zstyle ':completion:*' menu select=3 yes
+#zstyle ':completion:*' prompt 'Alternatives %e:'
+#zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
+zstyle :compinstall filename '${HOME}/.zshrc'
+
+# From adrien config file
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+#zstyle ':completion:*' menu select=2
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+unsetopt list_ambiguous
+ 
+# ---[ Modules ]-------------------------------------------------------
+zmodload zsh/complist
+autoload -Uz compinit
+compinit
+zmodload -a zsh/stat stat
+zmodload -a zsh/zpty zpty
+zmodload -ap zsh/mapfile mapfile
+
+
+autoload -Uz vcs_info
+[[ $(fgconsole 2>/dev/null) == 1 ]] && startx 
+
+stty -ixon
