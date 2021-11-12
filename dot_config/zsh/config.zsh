@@ -1,6 +1,10 @@
 # --[ Display settings ]------------------------------------------------
+
 autoload -Uz promptinit
- promptinit; prompt adam2
+ promptinit; 
+ {{- if not .work }}
+ prompt adam2
+ {{- end }}
 #. ~/.zshprompt; setprompt
 
 # Use emacs keybindings even if our EDITOR is set to vi
