@@ -1,0 +1,4 @@
+install.sh
+{{- if ne .type "container" }}
+.config/alacritty
+{{- end }}
