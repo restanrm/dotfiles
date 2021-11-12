@@ -4,17 +4,17 @@
 
 {{- if eq .chezmoi.osRelease.id "alpine" }}
 
-for pkg in ripgrep fzf httpie kubectl fd gopass; do
+for pkg in ripgrep fzf httpie kubectl fd gopass neovim; do
   apk add --no-cache $pkg
 done
 
 {{- else if eq .chezmoi.osRelease.id "arch" }}
 
-sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-openstackclient gopass kubectx
+sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-openstackclient gopass kubectx neovim
 
 {{- else if eq .chezmoi.osRelease.id "debian" }}
 
-sudo apt install -y ripgrep fzf pip httpie kubernetes-client fd-find gopass
+sudo apt install -y ripgrep fzf pip httpie kubernetes-client fd-find gopass neovim
 pip install openstackclient
 
 {{- end }}
