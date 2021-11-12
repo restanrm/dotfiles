@@ -19,6 +19,14 @@
 {{-   $email = promptString "email" $email -}}
 {{- end -}}
 
+{{- /* update work related informations */ -}}
+{{- $work := true -}}
+{{- if hasKey . "work" -}}
+{{-   $work = .work -}}
+{{- else if $interactive -}}
+{{-   $work = promptBool "Is this compter for work ? (write 'false' if not)" $work -}}
+{{- end -}}
+
 {{- if $interactive -}}
 {{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
@@ -28,8 +36,12 @@ sourceDir: "{{ .chezmoi.sourceDir }}"
 data:
   name: "{{ $name }}"
   email: "{{ $email }}"
+  work: {{ $work }}
+  {{- if not $interactive }}
   type: container
-  work: true
+  {{- else }}
+  type: baremetal
+  {{- end }}
 
 git:
   autoCommit: true
