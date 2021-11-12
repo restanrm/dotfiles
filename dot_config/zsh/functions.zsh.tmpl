@@ -148,6 +148,7 @@ function vsphere() {
   docker run --rm -it lamw/rvc rvc ara@37.187.228.30
 }
 
+{{- if eq .work true }}
 # find in platform repository
 function sf() {
   local args=$@
@@ -160,6 +161,7 @@ unset OS_CLOUD
 osctx () {
   source <(gopass ls --flat | grep openrc.sh | rofi -dmenu | xargs --no-run-if-empty gopass show -n)
 }
+{{- end }}
 
 # new kctx function
 if [ -f ~/.kube.env ]; then source ~/.kube.env; fi
