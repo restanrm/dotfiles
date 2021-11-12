@@ -43,5 +43,6 @@ alias -g T='tail'
 
 alias k=kubectl
 alias ks="kubectl --namespace kube-system"
+alias ko="kubectl get pods -A -o wide | egrep -vi "running|completed"'
 
 alias sway='XKB_DEFAULT_LAYOUT=fr XKB_DEFAULT_VARIANT=bepo sway'
