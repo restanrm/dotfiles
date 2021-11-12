@@ -26,6 +26,10 @@ archive() {
     done
 }
 
+function pdftk() {
+  docker run --rm -it -v $PWD:/data --workdir /data restanrm/docker-pdftk pdftk $@
+}
+
 {{- if .work }}
 function ssht() {
   local out
