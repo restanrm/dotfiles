@@ -47,4 +47,6 @@ alias ks="kubectl --namespace kube-system"
 alias ko="kubectl get pods -A -o wide | egrep -vi 'running|completed'"
 alias os=openstack
 
+{{- if ne .type "container" }}
 alias sway='XKB_DEFAULT_LAYOUT=fr XKB_DEFAULT_VARIANT=bepo sway'
+{{- end }}
