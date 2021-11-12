@@ -1,5 +1,3 @@
-
-
 # --[ Display settings ]------------------------------------------------
 autoload -Uz promptinit
  promptinit; prompt adam2
@@ -71,9 +69,6 @@ function f () {
 		q="*$1*"
 		find . -iname $q
 }
-i3prop() { xprop | egrep "CLASS|ROLE" }
-susp() { i3lock && s pm-suspend }
-title() { echo -ne "\033];$@\007"; }
 
 # ---[ Terminal settings ]---------------------------------------------
 case "$TERM" in
@@ -166,8 +161,11 @@ zmodload -a zsh/stat stat
 zmodload -a zsh/zpty zpty
 zmodload -ap zsh/mapfile mapfile
 
-
 autoload -Uz vcs_info
 [[ $(fgconsole 2>/dev/null) == 1 ]] && startx 
+
+i3prop() { xprop | egrep "CLASS|ROLE" }
+susp() { i3lock && s pm-suspend }
+title() { echo -ne "\033];$@\007"; }
 
 stty -ixon
