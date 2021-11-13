@@ -198,7 +198,6 @@ input 1739:30385:CUST0001:00_06CB:76B1_Touchpad {
 }
 
 # lockscreen
-#bindsym control+Mod1+l exec i3lock -t -i /home/arn/Images/Halloween/jack_double.png
 bindsym control+$mod+l exec $lock
 bindsym $mod+Tab workspace back_and_forth
 
@@ -209,21 +208,15 @@ bindsym control+$mod+Left move workspace to left
 bindsym $mod+equal move scratchpad
 bindsym $mod+Shift+equal scratchpad show
 
-bindsym --locked XF86MonBrightnessDown exec "xbacklight -dec 10"
-bindsym --locked XF86MonBrightnessUp exec "xbacklight -inc 10"
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 10%+
 
 # control sound
 bindsym --locked XF86AudioRaiseVolume exec pulseaudio-ctl up
 bindsym --locked XF86AudioLowerVolume exec pulseaudio-ctl down
 bindsym --locked XF86AudioMute exec pulseaudio-ctl mute
-#bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume $(pactl list sinks | grep Destination | cut -d' ' -f 2 | cut -d'#' -f 2) +5%"
-#bindsym XF86AudioLowerVolume exec "pactl set-sink-volume $(pactl list sinks | grep Destination | cut -d' ' -f 2 | cut -d'#' -f 2) -5%"
-#bindsym XF86AudioMute exec "pactl set-sink-mute $(pactl list sinks | grep Destination | cut -d' ' -f 2 | cut -d'#' -f 2) toggle"
 
 # control Music
-#bindsym --locked XF86AudioNext exec "curl -d '' http://localhost:8060/keypress/Right"
-#bindsym --locked XF86AudioPrev exec "curl -d '' http://localhost:8060/keypress/Left"
-#bindsym --locked XF86AudioPlay exec "curl -d '' http://localhost:8060/keypress/Play"
 bindsym --locked XF86AudioPlay exec "playerctl play-pause"
 bindsym --locked XF86AudioPrev exec "playerctl previous"
 bindsym --locked XF86AudioNext exec "playerctl next"
@@ -232,10 +225,6 @@ bindsym F9 exec pulseaudio-ctl mute-input
 #bindsym $mod+space exec /home/nrm/.config/i3/keymap.sh
 #bindsym $mod+l exec gopass ls --flat | wofi --show dmenu | xargs --no-run-if-empty gopass show -c
 bindsym $mod+l exec touch /tmp/passwdlock | gopass ls --flat | rofi  -kb-remove-word-back Alt+BackSpace -kb-remove-word-forward Alt+d  -dmenu | xargs --no-run-if-empty gopass show -c
-
-bindsym control+$mod+Shift+L exec "bellctl play -d supervision lca"
-bindsym control+$mod+Shift+B exec "bellctl play -d supervision bieres"
-bindsym control+$mod+Shift+A exec "bellctl play -d supervision all"
 
 # screenshots
 bindsym Print exec 'grim -g "$(slurp)" - | wl-copy'
@@ -268,9 +257,13 @@ output "*" bg /home/nrm/.config/sway/wallpaper.jpg fill
 #     resume 'swaymsg "output * dpms on"' \
 #   before-sleep $lock
 
+# notification daemon
+exec mako
+
+{{- if .work }}
 exec firefox -p work
 exec firefox -p personnel
-exec mako
+{{- end }}
 
 
 exec wl-paste -t text --watch /home/nrm/.config/sway/myclipman store

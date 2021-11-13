@@ -16,6 +16,19 @@ sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-pip gopass kube
 pip install openstackclient
 {{- end }}
 
+{{- if ne .type "container" }}
+# install wayland command for sway
+# notification: mako
+# clipboard manager: clipman
+sudo pacman -Sy --noconfirm mako wl-clipboard playerctl brightnessctl
+
+echo ""
+echo "You should manually install:"
+echo "- clipman: https://github.com/yory8/clipman"
+echo "- pulseaudio-ctl: https://aur.archlinux.org/packages/pulseaudio-ctl/"
+echo ""
+{{- end }}
+
 {{- else if (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu")) }}
 
 sudo apt update
