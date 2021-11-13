@@ -10,7 +10,7 @@ done
 
 {{- else if eq .chezmoi.osRelease.id "arch" }}
 
-sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-pip gopass kubectx neovim
+sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-pip gopass kubectx neovim direnv
 
 {{- if .work }}
 pip install openstackclient
