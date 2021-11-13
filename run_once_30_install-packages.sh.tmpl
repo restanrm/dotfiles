@@ -12,7 +12,7 @@ done
 
 sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-openstackclient gopass kubectx neovim
 
-{{- else if eq .chezmoi.osRelease.id "debian" }}
+{{- else if (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu")) }}
 
 sudo apt install -y ripgrep fzf pip httpie kubernetes-client fd-find gopass neovim
 pip install openstackclient
