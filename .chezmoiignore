@@ -1,4 +1,6 @@
 install.sh
 {{- if ne .type "container" }}
 .config/alacritty
+.conkyrc
+.config/sway
 {{- end }}
