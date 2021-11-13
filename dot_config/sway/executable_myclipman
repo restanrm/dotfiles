@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ -e /tmp/passwdlock ]]; then
+  rm /tmp/passwdlock;
+else
+  clipman $@
+fi
