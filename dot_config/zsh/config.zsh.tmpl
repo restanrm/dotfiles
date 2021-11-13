@@ -1,7 +1,7 @@
 # --[ Display settings ]------------------------------------------------
 
 autoload -Uz promptinit
- promptinit; 
+ promptinit;
  {{- if not .work }}
  prompt adam2
  {{- end }}
@@ -94,7 +94,6 @@ case "$TERM" in
 		bindkey '\eOc' forward-word		# ctrl cursor right
 		bindkey '\eOd' backward-word		# ctrl cursor left
 		bindkey '\e[3~' backward-delete-char	# This should not be necessary!
-		setxkbmap fr -variant bepo
 		;;
 	rxvt*)
 		bindkey '\e[7~' beginning-of-line	# home
@@ -103,14 +102,12 @@ case "$TERM" in
 		bindkey '\eOd' backward-word		# ctrl cursor left
 		bindkey '\e[3~' delete-char	# This should not be necessary!
 		bindkey '\e[2~' overwrite-mode		# Insert
-		setxkbmap fr -variant bepo
 		;;
 	xterm*)
 		bindkey "\e[1~" beginning-of-line	# Home
 		bindkey "\e[4~" end-of-line		# End
 		bindkey '\e[3~' delete-char		# Del
 		bindkey '\e[2~' overwrite-mode		# Insert
-		setxkbmap fr -variant bepo
 		;;
 	sun)
 		bindkey '\e[214z' beginning-of-line       # Home
@@ -156,7 +153,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 unsetopt list_ambiguous
- 
+
 # ---[ Modules ]-------------------------------------------------------
 zmodload zsh/complist
 zmodload -a zsh/stat stat
@@ -164,7 +161,7 @@ zmodload -a zsh/zpty zpty
 zmodload -ap zsh/mapfile mapfile
 
 autoload -Uz vcs_info
-[[ $(fgconsole 2>/dev/null) == 1 ]] && startx 
+[[ $(fgconsole 2>/dev/null) == 1 ]] && startx
 
 i3prop() { xprop | egrep "CLASS|ROLE" }
 susp() { i3lock && s pm-suspend }
