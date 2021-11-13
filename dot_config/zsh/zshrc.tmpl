@@ -1,5 +1,5 @@
-if [ ! -d /tmp/nrm ]; then
-	mkdir /tmp/nrm 2>/dev/null
+if [ ! -d /tmp/$USER ]; then
+	mkdir /tmp/$USER 2>/dev/null
 fi
 
 {{- if ne .type "container" }}
