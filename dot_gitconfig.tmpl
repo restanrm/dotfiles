@@ -35,8 +35,8 @@
 	# Show files ignored by git:
 	ign = ls-files -o -i --exclude-standard
 [user]
-	email = adrien.raffin@sekoia.fr
-	name = Adrien Raffin-Caboisse
+	email = {{ .email }}
+	name = {{ .name }}
   signingkey = 7FB60532DEBEAD6A
 [push]
 	default = current
