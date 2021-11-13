@@ -72,14 +72,4 @@ PROMPT=$PROMPT'$(kube_ps1) (%D{%y-%m-%dT%H:%M:%S%z}) '
 #   export EDITOR='mvim'
 # fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-
-alias eshttp="http -a ara:espPCCe3OwF0fDDl5pmLwgz7"
-alias escurl="curl -u ara:espPCCe3OwF0fDDl5pmLwgz7"
-
 source $HOME/.config/zsh/zshrc
