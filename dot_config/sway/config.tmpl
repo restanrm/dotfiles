@@ -251,8 +251,6 @@ assign [title="Sharing Indicator"] $w10
 
 output "*" bg /home/nrm/.config/sway/wallpaper.jpg fill
 
-
-# Lancement de programmes
 # exec swayidle \
 #   timeout 150 $lock \
 #   timeout 300 'swaymsg "output * dpms off"' \
@@ -265,9 +263,12 @@ exec mako
 {{- if .work }}
 exec firefox -p work
 exec firefox -p personnel
+{{- else if eq .chezmoi.hostname "intercepteur" }}
+exec firefox
 {{- end }}
 
 
+# run clipboard management watcher and bindsym
 exec wl-paste -t text --watch /home/nrm/.config/sway/myclipman store
 exec wl-paste -p -t text --watch /home/nrm/.config/sway/myclipman store -P
 bindsym $mod+p exec "clipman pick -t rofi"
