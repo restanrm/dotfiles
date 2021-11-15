@@ -203,7 +203,7 @@ input 1739:30385:CUST0001:00_06CB:76B1_Touchpad {
 {{- if eq .chezmoi.hostname "intercepteur" }}
 # custom input to change layout with toggle config
 input type:keyboard {
-  xkb_layout fr,fr-bepo
+  xkb_layout fr(bepo),fr
 }
 bindsym $mod+space input type:keyboard xkb_switch_layout next
 {{- end }}
