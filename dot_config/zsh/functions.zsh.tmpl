@@ -43,6 +43,7 @@ kctx() {
 
 kex() {
   pod=$(kubectl get pod -o wide | grep Running | fzf --exit-0 --select-1 | awk '{print $1}')
+  echo "kubectl exec -it ${pod} -- $@"
   kubectl exec -it ${pod} -- $@
 }
 
