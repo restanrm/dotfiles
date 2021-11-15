@@ -2,8 +2,12 @@
 #xwayland disable
 
 # swaymsg -t get_outputs
+{{- if eq .chezmoi.hostname "intercepteur" }}
+output HDMI-A-1 scale 2
+{{- else }}
 output eDP-1 pos 0 0
 output DP2 pos 1920 0
+{{- end }}
 
 # It will not be overwritten, so edit it as you like.
 #
