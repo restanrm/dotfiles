@@ -233,6 +233,7 @@ bindsym Print exec 'grim -g "$(slurp)" - | wl-copy'
 #bindsym Print --release exec "scrot -s /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
 #bindsym Shift+Print exec "scrot /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
 
+
 # floating windows
 for_window [class="Pinentry"] floating enable
 for_window [app_id="pavucontrol"] floating enable
@@ -241,6 +242,11 @@ for_window [app_id="pavucontrol"] floating enable
 bindsym $mod+Prior opacity plus 0.05
 bindsym $mod+Next opacity minus 0.05
 for_window [app_id="termite"] opacity 0.90
+
+{{- if eq .chezmoi.hostname "intercepteur" }}
+# toggling bluetooth
+bindsym $mod+b exec /home/nrm/.config/sway/toggleBluetooth
+{{- end }}
 
 # assign windows to workspace
 assign [class="Chromium"] $w8
