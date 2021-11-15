@@ -1,5 +1,5 @@
 install.sh
-{{- if .type "container" }}
+{{- if eq .type "container" }}
 .config/alacritty
 .conkyrc
 .config/sway
