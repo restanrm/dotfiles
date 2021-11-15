@@ -195,9 +195,18 @@ bar {
 }
 
 # enable touch to click
+# input type:touchpad { # should try this
 input 1739:30385:CUST0001:00_06CB:76B1_Touchpad {
   tap enabled
 }
+
+{{- if eq .chezmoi.hostname "intercepteur" }}
+# custom input to change layout with toggle config
+input type:keyboard {
+  xkb_layout fr,fr-bepo
+}
+bindsym $mod+space input type:keyboard xkb_switch_layout next
+{{- end }}
 
 # lockscreen
 bindsym control+$mod+l exec $lock
