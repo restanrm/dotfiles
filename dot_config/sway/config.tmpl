@@ -206,6 +206,10 @@ input type:keyboard {
   xkb_layout fr(bepo),fr
 }
 bindsym $mod+space input type:keyboard xkb_switch_layout next
+{{- else }}
+input type:keyboard {
+  xkb_layout fr(bepo)
+}
 {{- end }}
 
 # lockscreen
