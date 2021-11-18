@@ -1,4 +1,5 @@
 install.sh
+README.md
 {{- if eq .type "container" }}
 .config/alacritty
 .conkyrc
