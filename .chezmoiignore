@@ -2,5 +2,7 @@ install.sh
 {{- if eq .type "container" }}
 .config/alacritty
 .conkyrc
+.conky_player
+.conky_mic_status
 .config/sway
 {{- end }}
