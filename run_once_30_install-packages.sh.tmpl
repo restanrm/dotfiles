@@ -4,13 +4,13 @@
 
 {{- if eq .chezmoi.osRelease.id "alpine" }}
 
-for pkg in ripgrep fzf httpie kubectl fd gopass neovim; do
+for pkg in ripgrep fzf httpie kubectl fd neovim zsh; do
   apk add --no-cache $pkg
 done
 
 {{- else if eq .chezmoi.osRelease.id "arch" }}
 
-sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-pip gopass kubectx neovim direnv
+sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-pip gopass kubectx neovim direnv zsh
 
 {{- if .work }}
 pip install openstackclient
@@ -32,7 +32,7 @@ echo ""
 {{- else if (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu")) }}
 
 sudo apt update
-for pkg in ripgrep fzf pip httpie kubernetes-client fd-find gopass neovim; do
+for pkg in ripgrep fzf pip httpie kubernetes-client fd-find neovim zsh; do
   sudo apt install -y $pkg
 done
 pip install openstackclient
