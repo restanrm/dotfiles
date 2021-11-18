@@ -47,11 +47,11 @@ alias ks="kubectl --namespace kube-system"
 alias ko="kubectl get pods -A -o wide | egrep -vi 'running|completed'"
 alias os=openstack
 
-{{- if ne .type "container" }}
+{{- if ne .type "server" }}
 alias sway='XKB_DEFAULT_LAYOUT=fr XKB_DEFAULT_VARIANT=bepo sway'
 {{- end }}
 
-{{- if (and (.work) (ne .type "container")) }}
+{{- if (and (.work) (ne .type "server")) }}
 alias eshttp="http -a ara:{{ gopass "platform/site/siceventsindex.dashboard.sekoia.io/ara" }}"
 alias escurl="curl -u ara:{{ gopass "platform/site/siceventsindex.dashboard.sekoia.io/ara" }}"
 alias passSI="PASSWORD_STORE_DIR=~/.password-store-SI PASSWORD_STORE_GIT=~/.password-store-SI pass"

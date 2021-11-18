@@ -7,7 +7,7 @@ source ~/.config/zsh/aliases.zsh
 source ~/.config/zsh/env.zsh
 source ~/.config/zsh/config.zsh
 
-{{ if ne .type "container" -}}
+{{ if ne .type "server" -}}
 if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
 	exec sway
 fi

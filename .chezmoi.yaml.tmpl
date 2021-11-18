@@ -27,6 +27,15 @@
 {{-   $work = promptBool "Is this compter for work ? (write 'false' if not)" $work -}}
 {{- end -}}
 
+{{- /* update host type */ -}}
+{{- $type := "server" -}}
+{{- if hasKey . "type" -}}
+{{-   $type = .type -}}
+{{- else if $interactive -}}
+{{-   $type = promptString "Host type (server):" $type -}}
+{{- end -}}
+
+
 {{- if $interactive -}}
 {{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
@@ -37,11 +46,7 @@ data:
   name: "{{ $name }}"
   email: "{{ $email }}"
   work: {{ $work }}
-  {{- if not $interactive }}
-  type: container
-  {{- else }}
-  type: baremetal
-  {{- end }}
+  type: "{{ type }}"
 
 git:
   autoCommit: true

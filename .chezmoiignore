@@ -1,6 +1,6 @@
 install.sh
 README.md
-{{- if eq .type "container" }}
+{{- if eq .type "server" }}
 .config/alacritty
 .conkyrc
 .conky_player

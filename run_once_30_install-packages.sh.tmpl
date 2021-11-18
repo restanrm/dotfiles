@@ -16,7 +16,7 @@ sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-pip gopass kube
 pip install openstackclient
 {{- end }}
 
-{{- if ne .type "container" }}
+{{- if ne .type "server" }}
 # install wayland command for sway
 # notification: mako
 # clipboard manager: clipman
