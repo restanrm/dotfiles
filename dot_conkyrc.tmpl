@@ -18,10 +18,8 @@ conky.config = {
 conky.text = [[
 [
 #${exec python ~/.config/i3/unread_mail.py}
-{{- if ne .chezmoi.hostname "intercepteur" }}
 ${exec ~/.conky_player},
 ${exec ~/.conky_mic_status},
-{{- end }}
 {"name":"disk_info","instance":"/","full_text":"/: ${fs_used_perc /}% U, ${fs_free /} F","color": ${if_match ${fs_used_perc /}<60}"\#ffffff"${else} ${if_match ${fs_used_perc /}>80}"\#ff0000"${else}"\#ffa500"${endif} ${endif} },
 {"name":"disk_info","instance":"/home","full_text":"/home: ${fs_used_perc /home}% U, ${fs_free /home} F", "color": ${if_match ${fs_used_perc /home}<60}"\#ffffff"${else} ${if_match ${fs_used_perc /home}>80}"\#ff0000"${else}"\#ffa500"${endif} ${endif} },
 #{"name":"disk_info","instance":"/data","full_text":"/data: ${fs_used_perc /data}% U, ${fs_free /data} F", "color": ${if_match ${fs_used_perc /data}<60}"\#ffffff"${else} ${if_match ${fs_used_perc /data}>80}"\#ff0000"${else}"\#ffa500"${endif} ${endif} },
