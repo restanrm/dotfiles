@@ -20,15 +20,17 @@
 [alias]
 	st = status
 	ci = commit
-  ca = commit -S --amend
+	ca = commit -S --amend
+	pf = push --force-with-lease
+	rb = !git fetch -p && git rebase -S -i origin/develop
+	cp = cherry-pick
 	br = branch
 	co = checkout
 	df = diff
 	dc = diff --cached
 	lg = log -p
-  pf = push --force-with-lease
 	lol =  log --graph --pretty='%C(red)%h %C(green)%G? %<|(25,mtrunc)%C(yellow)%an %C(auto)%d %C(blue)%s'
-  logl = log --graph --decorate --pretty=oneline --abbrev-commit
+	logl = log --graph --decorate --pretty=oneline --abbrev-commit
 	lola =  log --graph --all --pretty='%C(red)%h %<|(25,mtrunc)%C(yellow)%an %C(auto)%d %C(blue)%s'
 	ls = ls-files
 
@@ -37,7 +39,7 @@
 [user]
 	email = {{ .email }}
 	name = {{ .name }}
-  signingkey = 7FB60532DEBEAD6A
+	signingkey = 7FB60532DEBEAD6A
 [push]
 	default = current
 [http]
@@ -49,4 +51,4 @@
 	insteadOf = https://github.com/
 [rebase]
 	autoStash = true
-  autoSquash = true
+	autoSquash = true
