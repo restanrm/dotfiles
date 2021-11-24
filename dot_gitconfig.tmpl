@@ -24,6 +24,8 @@
 	pf = push --force-with-lease
 	rb = !git fetch -p && git rebase -S -i origin/develop
 	cp = cherry-pick
+  dev = !git switch develop && git pull
+  master = !git switch master && git pull
 	br = branch
 	co = checkout
 	df = diff
