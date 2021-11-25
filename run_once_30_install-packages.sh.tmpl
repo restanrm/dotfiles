@@ -13,7 +13,7 @@ done
 sudo pacman -Sy --noconfirm ripgrep fzf httpie fd kubectl python-pip gopass kubectx neovim direnv zsh
 
 {{- if .work }}
-pip install openstackclient
+pacman -Sy --noconfirm python-openstackclient
 {{- end }}
 
 {{- if ne .type "server" }}
