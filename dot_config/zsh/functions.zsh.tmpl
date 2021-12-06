@@ -125,7 +125,7 @@ work() {
   local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
   local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
   local depth=1
-  local dir=$(fd . --type d --max-depth ${depth} --min-depth ${depth} ${worktrees_dir}| cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
+  local dir=$(fd --full-path ${worktree_dir} --type d --max-depth ${depth} --min-depth ${depth} | cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
   if [ ! -z $dir ]; then
     if [ -d ${worktrees_dir}/$dir ]; then
       cd ${worktrees_dir}/$dir
@@ -147,7 +147,7 @@ endwork() {
   local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
   local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
   local depth=1
-  local dir=$(fd . --type d --max-depth ${depth} --min-depth ${depth} ${worktrees_dir}| cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
+  local dir=$(fd --full-path ${worktree_dir} --type d --max-depth ${depth} --min-depth ${depth} | cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
   if [ ! -z $dir ]; then
     if [ -d ${worktree_dir}/$dir ]; then
       pushd ${repo_dir}
