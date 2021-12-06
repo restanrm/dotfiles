@@ -95,4 +95,68 @@ osctx () {
   local args=$1
   source <(gopass ls --flat | grep openrc.sh | rofi -dmenu | xargs --no-run-if-empty gopass show -n)
 }
+
+# needs:
+# cd into exiting repository
+# create now PR and go to that directory (only in cli for now)
+# update current namespace to branch name
+# TODO: code the following function to be generic.
+gworktree() {
+  git fetch -p
+  # folder to store all worktrees for all repositories
+  local worktrees_dir=/home/nrm/dev/git-trees
+  # TODO: improve perf of informations retrieval about branch
+  # should store the following in a cached file related to repository maybe at
+  # the same place than where we store the content of the branches
+  local origin="origin/$(git remote show origin | grep HEAD | sed -n 's/.*HEAD : //p')"
+  swaymsg 'move workspace to branch-name'
+  # find a way to get basepath of the repository
+  # this command should only match my way of storing git arborescence. Each
+  # parameter should be tuned to you preference
+  local depth=4
+  local branch=$(fd . --type d --max-depth ${depth} --min-depth ${depth} ${worktrees_dir}| cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
+  swaymsg "rename workspace to ${branch}"
+  # git worktree add -b update-grafana-version /home/nrm/dev/git-trees/github.com/SekoiaLab/platform/update-grafana-version origin/develop
+  # git worktree add -b ${branch} ${worktree_dir}/github.com/SekoiaLab/platform/${branch} ${origin}
+}
+
+# jumpstart of the worktree feature. Need to improve this
+work() {
+  local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
+  local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
+  local depth=1
+  local dir=$(fd . --type d --max-depth ${depth} --min-depth ${depth} ${worktrees_dir}| cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
+  if [ ! -z $dir ]; then
+    if [ -d ${worktrees_dir}/$dir ]; then
+      cd ${worktrees_dir}/$dir
+    else
+      cd ${repo_dir}
+      git fetch -p
+      git worktree add ${worktrees_dir}/$dir -b $dir origin/develop --no-track
+      if [ $? -eq 255 ];
+      then
+        git worktree add ${worktrees_dir}/$dir $dir
+      fi
+      cd ${worktrees_dir}/$dir
+    fi
+  fi
+}
+
+# temporary endwork function just to jumpstart usage of this feature
+endwork() {
+  local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
+  local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
+  local depth=1
+  local dir=$(fd . --type d --max-depth ${depth} --min-depth ${depth} ${worktrees_dir}| cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
+  if [ ! -z $dir ]; then
+    if [ -d ${worktree_dir}/$dir ]; then
+      pushd ${repo_dir}
+      git worktree remove $dir
+      git branch -d $dir
+      popd
+    fi
+  fi
+}
+
+
 {{- end }}
