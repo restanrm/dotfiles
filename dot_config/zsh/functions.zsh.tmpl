@@ -117,7 +117,7 @@ gworktree() {
   local branch=$(fd . --type d --max-depth ${depth} --min-depth ${depth} ${worktrees_dir}| cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
   swaymsg "rename workspace to ${branch}"
   # git worktree add -b update-grafana-version /home/nrm/dev/git-trees/github.com/SekoiaLab/platform/update-grafana-version origin/develop
-  # git worktree add -b ${branch} ${worktree_dir}/github.com/SekoiaLab/platform/${branch} ${origin}
+  # git worktree add -b ${branch} ${worktrees_dir}/github.com/SekoiaLab/platform/${branch} ${origin}
 }
 
 # jumpstart of the worktree feature. Need to improve this
@@ -125,7 +125,7 @@ work() {
   local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
   local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
   local depth=1
-  local dir=$(fd --full-path ${worktree_dir} --type d --max-depth ${depth} --min-depth ${depth} | cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
+  local dir=$(fd --full-path ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
   if [ ! -z $dir ]; then
     if [ -d ${worktrees_dir}/$dir ]; then
       cd ${worktrees_dir}/$dir
@@ -147,9 +147,9 @@ endwork() {
   local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
   local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
   local depth=1
-  local dir=$(fd --full-path ${worktree_dir} --type d --max-depth ${depth} --min-depth ${depth} | cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
+  local dir=$(fd --full-path ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | cut -d/ -f6- | fzf --print-query --exit-0 | tail -n 1)
   if [ ! -z $dir ]; then
-    if [ -d ${worktree_dir}/$dir ]; then
+    if [ -d ${worktrees_dir}/$dir ]; then
       pushd ${repo_dir}
       git worktree remove $dir
       git branch -d $dir
