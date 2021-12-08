@@ -109,7 +109,7 @@ gworktree() {
   # should store the following in a cached file related to repository maybe at
   # the same place than where we store the content of the branches
   local origin="origin/$(git remote show origin | grep HEAD | sed -n 's/.*HEAD : //p')"
-  swaymsg "move workspace to ${branch-name}"
+  swaymsg rename workspace to "${branch-name}"
   # find a way to get basepath of the repository
   # this command should only match my way of storing git arborescence. Each
   # parameter should be tuned to you preference
@@ -125,11 +125,12 @@ work() {
   local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
   local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
   local depth=1
-  local dir=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --query "$@" --print-query | tail -n 1)
+  local args=$@
+  local dir=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --query "$args" --print-query | tail -n 1)
   if [ ! -z $dir ]; then
     if [ -d ${worktrees_dir}/$dir ]; then
       cd ${worktrees_dir}/$dir
-      swaymsg "move workspace to ${branch-name}"
+      swaymsg rename workspace to "${dir}"
     else
       cd ${repo_dir}
       git fetch -p
@@ -139,7 +140,7 @@ work() {
         git worktree add ${worktrees_dir}/$dir $dir
       fi
       cd ${worktrees_dir}/$dir
-      swaymsg "move workspace to ${branch-name}"
+      swaymsg rename workspace to "${dir}"
     fi
   fi
 }
