@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "headset"
+version = "0.1.0"
+description = ""
+authors = ["Adrien Raffin-Caboisse <adrien.raffin@sekoia.fr>"]
+
+[tool.poetry.scripts]
+headset = "headset:main"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+evdev = "^1.4.0"
+pulsectl = "^21.10.5"
+loguru = "^0.5.3"
+
+[tool.poetry.dev-dependencies]
+black = "^21.12b0"
+mypy = "^0.920"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
