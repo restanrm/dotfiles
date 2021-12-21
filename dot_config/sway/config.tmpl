@@ -282,6 +282,7 @@ exec mako
 {{- if .work }}
 exec firefox -p work
 exec firefox -p personnel
+exec /home/nrm/.config/sway/headset.sh
 {{- else if eq .chezmoi.hostname "intercepteur" }}
 exec firefox
 {{- end }}
