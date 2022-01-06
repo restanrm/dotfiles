@@ -155,7 +155,7 @@ endwork() {
     if [ -d ${worktrees_dir}/$dir ]; then
       pushd ${repo_dir}
       git worktree remove $dir
-      git branch -d $dir
+      git branch -D $dir
       popd
     fi
   fi
