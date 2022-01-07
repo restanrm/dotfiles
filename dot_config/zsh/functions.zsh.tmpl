@@ -82,6 +82,11 @@ function vsphere() {
   docker run --rm -it lamw/rvc rvc ara@37.187.228.30
 }
 
+function obs() {
+  swaymsg rename workspace to obs
+  obs
+}
+
 # find in platform repository
 function sf() {
   local args=$@
