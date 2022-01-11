@@ -159,7 +159,7 @@ endwork() {
   if [ ! -z $dir ]; then
     if [ -d ${worktrees_dir}/$dir ]; then
       pushd ${repo_dir}
-      git worktree remove $dir
+      git worktree remove $dir --force
       git branch -D $dir
       popd
     fi
