@@ -201,11 +201,10 @@ input 1739:30385:CUST0001:00_06CB:76B1_Touchpad {
 }
 
 {{- if eq .chezmoi.hostname "intercepteur" }}
-# custom input to change layout with toggle config
 input type:keyboard {
-  xkb_layout fr(bepo),fr
+  xkb_layout fr(bepo)
 }
-bindsym $mod+space input type:keyboard xkb_switch_layout next
+bindsym $mod+space exec /home/nrm/.config/sway/keymap.sh
 {{- else }}
 input type:keyboard {
   xkb_layout fr(bepo)
@@ -237,7 +236,6 @@ bindsym --locked XF86AudioPrev exec "playerctl previous"
 bindsym --locked XF86AudioNext exec "playerctl next"
 bindsym F9 exec pulseaudio-ctl mute-input
 
-#bindsym $mod+space exec /home/nrm/.config/i3/keymap.sh
 #bindsym $mod+l exec gopass ls --flat | wofi --show dmenu | xargs --no-run-if-empty gopass show -c
 bindsym $mod+l exec touch /tmp/passwdlock | gopass ls --flat | rofi  -kb-remove-word-back Alt+BackSpace -kb-remove-word-forward Alt+d  -dmenu | xargs --no-run-if-empty gopass show -c
 
