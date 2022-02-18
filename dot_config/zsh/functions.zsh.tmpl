@@ -161,8 +161,10 @@ endwork() {
   if [ ! -z $dir ]; then
     if [ -d ${worktrees_dir}/$dir ]; then
       pushd ${repo_dir}
+      git pull
       git worktree remove $dir --force
       git branch -D $dir
+      git remote update origin --prune
       popd
     fi
   fi
