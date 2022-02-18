@@ -139,10 +139,12 @@ work() {
     else
       cd ${repo_dir}
       git fetch -p
-      git worktree add ${worktrees_dir}/$dir -b $dir origin/develop --no-track
-      if [ $? -eq 255 ];
-      then
-        git worktree add ${worktrees_dir}/$dir $dir
+      git worktree add ${{worktrees_dir}/$dir -b $dir origin/$dir
+      if [ $? -eq 255 ]; then
+        git worktree add ${worktrees_dir}/$dir -b $dir origin/develop --no-track
+        if [ $? -eq 255 ]; then
+          git worktree add ${worktrees_dir}/$dir $dir
+        fi
       fi
       cd ${worktrees_dir}/$dir
       swaymsg rename workspace to "${dir}"
