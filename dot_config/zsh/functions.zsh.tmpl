@@ -58,8 +58,8 @@ function sshp() {
   servers=$(echo ${servers} | tail -n +2)
   for srv in $(echo ${servers} | xargs); do # xargs replace \n by ' '
     out="${out}tmux split-window 'ssh $srv';"
+    out="${out}tmux select-layout even-vertical;"
   done
-  out="${out}tmux select-layout even-vertical;"
   out="${out}ssh ${first}"
   eval $out
 }
