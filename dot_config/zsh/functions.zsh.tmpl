@@ -160,7 +160,9 @@ endwork() {
   local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
   local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
   local depth=1
-  local dir=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --print-query --exit-0 | tail -n 1)
+  local args=$@
+  if [ -z "${args}" ]; then args="$(git rev-parse --abbrev-ref HEAD)"; fi
+  local dir=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --print-query --query "$args" --exit-0 | tail -n 1)
   if [ ! -z $dir ]; then
     if [ -d ${worktrees_dir}/$dir ]; then
       pushd ${repo_dir}
