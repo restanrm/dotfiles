@@ -278,6 +278,7 @@ output "*" bg /home/nrm/.config/sway/wallpaper.jpg fill
 exec mako
 
 {{- if .work }}
+exec "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
 exec firefox -p work
 exec firefox -p personnel
 exec /home/nrm/.config/sway/headset.sh
