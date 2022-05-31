@@ -55,6 +55,8 @@ ZSH_CACHE_DIR=$HOME/.cache/zsh
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git jump pass ssh-agent extract kube-ps1 direnv)
 
+zstyle :omz:plugins:ssh-agent agent-forwarding yes
+
 source $ZSH/oh-my-zsh.sh
 PROMPT=$PROMPT'$(kube_ps1) (%D{%y-%m-%dT%H:%M:%S%z}) '
 
