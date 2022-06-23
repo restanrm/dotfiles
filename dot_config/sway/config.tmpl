@@ -292,3 +292,5 @@ exec wl-paste -t text --watch /home/nrm/.config/sway/myclipman store
 exec wl-paste -p -t text --watch /home/nrm/.config/sway/myclipman store -P
 bindsym $mod+p exec "clipman pick -t rofi"
 bindsym $mod+Shift+p exec "clipman clear -t rofi"
+
+exec swayidle -w timeout 300 'swaylock -f -c 40A497'
