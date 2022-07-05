@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+controller="E0:D4:64:01:AE:F4"
+device="7C:96:D2:8E:1F:BF"
+
+status=$(bluetoothctl show ${controller} | grep Powered | awk '{printf "%s", $2}'
+
+if [ ${status} = "yes" ]; then
+  printf "{\"name\":\"bluetooth\",\"instance\":\"status\",\"full_text\":\"bluetooth: ${status}\",\"color\":\"#ff0000\"}"
+else
+  printf "{\"name\":\"bluetooth\",\"instance\":\"status\",\"full_text\":\"bluetooth: ${status}\",\"color\":\"#00ff00\"}"
+fi
