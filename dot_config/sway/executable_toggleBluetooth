@@ -1,19 +1,21 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 
 controller="E0:D4:64:01:AE:F4"
 device="7C:96:D2:8E:1F:BF"
 enabled="/home/nrm/.config/sway/Enabled.mp3"
 disabled="/home/nrm/.config/sway/Disabled.mp3"
 
-if bluetoothctl show ${controller} | grep Powered | grep no; then
-	bluetoothctl power on
-	if bluetoothctl info ${device} | grep "Connected: yes" -q; then 
+#if bluetoothctl show ${controller} | grep Powered | grep no; then
+	#bluetoothctl power on
+	if bluetoothctl info ${device} | grep "Connected: yes" -q; then
+    mpv ${disabled}
 		bluetoothctl disconnect ${device}
 	else
 		bluetoothctl connect ${device}
+    mpv ${enabled}
 	fi
-	mpv ${enabled}
-else
-	mpv ${disabled}
-	bluetoothctl power off
-fi
+	#mpv ${enabled}
+#else
+	#mpv ${disabled}
+	#bluetoothctl power off
+#fi
