@@ -12,7 +12,7 @@ else
 fi
 
 for device in $(bluetoothctl devices | awk '{print $2}'); do
-  bluetoothctl info "${device}" | grep Connected | grep "yes" 2>&1 1>/dev/null
+  bluetoothctl info "${device}" | grep Connected | grep "yes" -q
   res=$?
   if [[ ${res} -eq 0 ]]; then
     name=$(bluetoothctl info "${device}" | grep Alias | awk '{printf "%s", $2}')
