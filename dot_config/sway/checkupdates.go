@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -30,7 +29,7 @@ func checkupdates(filepath string) {
 
 func runCheckUpdates(filepath string, d time.Duration) {
 	for {
-		cmd := exec.Command("aurmansolver", "-Su")
+		cmd := exec.Command("yay", "-Qu")
 		b, err := cmd.CombinedOutput()
 		if err != nil {
 			logrus.WithFields(logrus.Fields{
@@ -39,23 +38,9 @@ func runCheckUpdates(filepath string, d time.Duration) {
 			b = []byte(fmt.Sprintf("Failed to get checkupdate messages: %v\n", err))
 		}
 
-		content := [][][]struct {
-			Name string
-		}{}
+		content := string(b)
 
-		json.Unmarshal(b, &content)
-		updates := []string{}
-
-		for _, a := range content {
-			for _, b := range a {
-				for _, c := range b {
-					if c.Name != "" {
-						updates = append(updates, c.Name)
-					}
-				}
-			}
-		}
-		err = writeInfo(filepath, format(updates))
+		err = writeInfo(filepath, strings.NewReader(content))
 		if err != nil {
 			logrus.WithFields(logrus.Fields{
 				"error": err,
