@@ -1,0 +1,7 @@
+keymap:
+  - name: arrows
+    remap:
+      alt-h: left
+      alt-j: down
+      alt-k: up
+      alt-l: right
