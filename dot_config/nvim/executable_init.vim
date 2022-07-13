@@ -83,10 +83,12 @@ if !exists('g:vscode')
 endif
 
 " change cursor position in bepo
-noremap C h
-noremap T j
-noremap S k
-noremap R l
+" commenting this section since xremap do this quite well, with the alt
+" modifier
+" noremap C h
+" noremap T j
+" noremap S k
+" noremap R l
 
 
 " trim whitespace at end of lines
