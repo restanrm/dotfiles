@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-val=$(pactl list sink-inputs | grep "media.name" | awk -F'"' '{print $2}' | sed -e 's/ - YouTube Music//')
+val=$(pactl list sink-inputs | grep "media.name" | awk -F'"' '{print $2}' | sed -e 's/ - YouTube Music//' | head -n 1)
 
 printf "{\"name\":\"playing\",\"instance\":\"status\",\"full_text\":\"🎵: ${val}\",\"color\":\"#b9b9b9\"}"
