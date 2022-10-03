@@ -49,20 +49,29 @@ kex() {
 
 
 {{- if .work }}
-function sshp() {
-  local out
-  local regex=$1
-  local servers=$(/usr/local/bin/list_nodes.sh ${regex} | sort) # servers are separated by \n
-  # pop first element from the list
-  local first=$(echo ${servers} | head -n 1)
-  servers=$(echo ${servers} | tail -n +2)
-  for srv in $(echo ${servers} | xargs); do # xargs replace \n by ' '
-    out="${out}tmux split-window 'ssh $srv';"
-    out="${out}tmux select-layout even-vertical;"
-  done
-  out="${out}ssh ${first}"
-  eval $out
+function ssht(){
+  ssh adrien@141.94.167.154 -t -- $@
 }
+
+function sshp() {
+  ssh adrien@54.37.23.139 -t -- $@
+}
+
+# now sshp means sshProd
+#function sshp() {
+#  local out
+#  local regex=$1
+#  local servers=$(/usr/local/bin/list_nodes.sh ${regex} | sort) # servers are separated by \n
+#  # pop first element from the list
+#  local first=$(echo ${servers} | head -n 1)
+#  servers=$(echo ${servers} | tail -n +2)
+#  for srv in $(echo ${servers} | xargs); do # xargs replace \n by ' '
+#    out="${out}tmux split-window 'ssh $srv';"
+#    out="${out}tmux select-layout even-vertical;"
+#  done
+#  out="${out}ssh ${first}"
+#  eval $out
+#}
 
 # function that infer connection to multiple instance of the same type
 # admin app-server 3
