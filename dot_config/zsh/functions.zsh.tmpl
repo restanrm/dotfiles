@@ -50,11 +50,11 @@ kex() {
 
 {{- if .work }}
 function ssht(){
-  ssh adrien@141.94.167.154 -t -- $@
+  ssh -I /usr/lib/libykcs11.so adrien@141.94.167.154 -t -- $@
 }
 
 function sshp() {
-  ssh adrien@54.37.23.139 -t -- $@
+  ssh -I /usr/lib/libykcs11.so adrien@54.37.23.139 -t -- $@
 }
 
 # now sshp means sshProd
