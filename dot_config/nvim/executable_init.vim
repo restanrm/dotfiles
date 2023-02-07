@@ -36,10 +36,14 @@ if !exists('g:vscode')
   Plug 'vim-scripts/groovy.vim'
   Plug 'jremmen/vim-ripgrep'
   Plug 'stephpy/vim-yaml'
-  Plug 'scrooloose/nerdtree'
-    nnoremap <leader>nn :NERDTree
-    nnoremap <leader>nr :NERDTreeRefreshRoot
-    nnoremap <leader>nf :NERDTreeFind
+"  Plug 'scrooloose/nerdtree'
+"    nnoremap <leader>nn :NERDTree
+"    nnoremap <leader>nr :NERDTreeRefreshRoot
+"    nnoremap <leader>nf :NERDTreeFind
+  Plug 'mbbill/undotree'
+  Plug 'nvim-tree/nvim-tree.lua'
+    nnoremap <leader>nn :NvimTreeToggle
+    nnoremap <leader>nf :NvimTreeFindFile
   Plug 'junegunn/vim-easy-align'
     vmap <Leader><bar> :EasyAlign*<bar><enter>
   Plug 'tpope/vim-commentary'
@@ -122,3 +126,38 @@ if !exists('g:vscode')
     \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
     \gVzv:call setreg('"', old_reg, old_regtype)<CR>
 endif
+
+
+lua <<EOF
+-- examples for your init.lua
+
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+--vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    width = 30,
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+        { key = "v", action = "open.vertical" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+EOF
