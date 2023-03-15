@@ -47,6 +47,84 @@ kex() {
   kubectl exec -it ${pod} -- $@
 }
 
+# worktree feature for git
+work() {
+  local worktrees_dir=~/.wt
+  local depth=1
+  local args=$@
+
+
+  # select the worktree
+  local dir=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --query "${args}" --print-query | tail -n 1)
+
+  # return if $dir points nowhere
+  if [ -z $dir ]; then
+    return
+  fi
+
+  if [ -d ${worktrees_dir}/$dir ]; then
+    # if worktree already exist, cd into it
+    cd ${worktrees_dir}/$dir
+    swaymsg rename workspace to "${dir}"
+  else
+    # exit if we are not in a git repository
+    git status 2>/dev/null 1>/dev/null
+    if [ $? -ne 0 ]; then
+      echo "Creating a worktree should be done in the original git directory"
+      return
+    fi
+
+    local git_user=$(git remote -v | grep origin|awk -F':' '{print $2}' | awk '{print $1}' | awk -F'/' '{print $1}'| tail -n 1)
+    local repo_name=$(git remote -v | grep origin|awk -F':' '{print $2}' | awk '{print $1}' | awk -F'/' '{print $2}'| xargs -I {} basename {} .git |tail -n 1)
+
+    # select the main branch of the repository to tie the branch to
+    local main_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+
+    git fetch -p
+    git worktree add ${worktrees_dir}/${git_user}-${repo_name}-${dir} -b $dir origin/$dir
+    if [ $? -eq 255 ]; then
+      git worktree add ${worktrees_dir}/${git_user}-${repo_name}-${dir} -b $dir origin/${main_branch} --no-track
+      if [ $? -eq 255 ]; then
+        git worktree add ${worktrees_dir}/${git_user}-${repo_name}-${dir} $dir
+      fi
+    fi
+    cd ${worktrees_dir}/${git_user}-${repo_name}-${dir}
+    swaymsg rename workspace to "${git_user}-${repo_name}-${dir}"
+  fi
+}
+
+endwork() {
+  local worktrees_dir=~/.wt
+  local depth=1
+  local args=$@
+
+  # exit if we are not in a git repository
+  git status 2>/dev/null 1>/dev/null
+  if [ $? -ne 0 ]; then
+    echo "Removing a worktree should be done in a git directory"
+    return
+  fi
+
+  if [ -z "${args}" ]; then args="$(git rev-parse --abbrev-ref HEAD)"; fi
+  local dir=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --print-query --query "$args" --exit-0 | tail -n 1)
+
+  # return if $dir points nowhere
+  if [ -z $dir ]; then
+    return
+  fi
+
+  local git_user=$(git remote -v | grep origin|awk -F':' '{print $2}' | awk '{print $1}' | awk -F'/' '{print $1}'| tail -n 1)
+  local repo_name=$(git remote -v | grep origin|awk -F':' '{print $2}' | awk '{print $1}' | awk -F'/' '{print $2}'| xargs -I {} basename {} .git |tail -n 1)
+
+  if [ -d ${worktrees_dir}/$dir ]; then
+    pushd $(git worktree list | head -n 1| awk '{print $1}')
+    git pull
+    git worktree remove $dir --force
+    git branch -D ${dir##${git_user}-${repo_name}-}
+    git remote update origin --prune
+    popd
+  fi
+}
 
 {{- if .work }}
 function ssht(){
@@ -55,43 +133,6 @@ function ssht(){
 
 function sshp() {
   ssh -I /usr/lib/libykcs11.so adrien@54.37.23.139 -t -- $@
-}
-
-# now sshp means sshProd
-#function sshp() {
-#  local out
-#  local regex=$1
-#  local servers=$(/usr/local/bin/list_nodes.sh ${regex} | sort) # servers are separated by \n
-#  # pop first element from the list
-#  local first=$(echo ${servers} | head -n 1)
-#  servers=$(echo ${servers} | tail -n +2)
-#  for srv in $(echo ${servers} | xargs); do # xargs replace \n by ' '
-#    out="${out}tmux split-window 'ssh $srv';"
-#    out="${out}tmux select-layout even-vertical;"
-#  done
-#  out="${out}ssh ${first}"
-#  eval $out
-#}
-
-# function that infer connection to multiple instance of the same type
-# admin app-server 3
-# is equivalent to
-# ssht app-server1 app-server2 app-server3
-function admin() {
-  local server
-  local number
-  local out
-  server=$1
-  number=$2
-  for i in $(seq $number); do
-    out="${out} ${server}$i"
-  done
-  echo -ne "$out"
-  ssht ${out}
-}
-
-function vsphere() {
-  docker run --rm -it lamw/rvc rvc ara@37.187.228.30
 }
 
 function obs() {
@@ -111,77 +152,6 @@ unset OS_CLOUD
 osctx () {
   local args=$1
   source <(gopass ls --flat | grep openrc.sh | rofi -dmenu | xargs --no-run-if-empty gopass show -n)
-}
-
-# needs:
-# cd into exiting repository
-# create now PR and go to that directory (only in cli for now)
-# update current namespace to branch name
-# TODO: code the following function to be generic.
-gworktree() {
-  git fetch -p
-  # folder to store all worktrees for all repositories
-  local worktrees_dir=/home/nrm/dev/git-trees
-  # TODO: improve perf of informations retrieval about branch
-  # should store the following in a cached file related to repository maybe at
-  # the same place than where we store the content of the branches
-  local origin="origin/$(git remote show origin | grep HEAD | sed -n 's/.*HEAD : //p')"
-  swaymsg rename workspace to "${branch-name}"
-  # find a way to get basepath of the repository
-  # this command should only match my way of storing git arborescence. Each
-  # parameter should be tuned to you preference
-  local depth=4
-  local branch=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --print-query | tail -n 1)
-  swaymsg "rename workspace to ${branch}"
-  # git worktree add -b update-grafana-version /home/nrm/dev/git-trees/github.com/SekoiaLab/platform/update-grafana-version origin/develop
-  # git worktree add -b ${branch} ${worktrees_dir}/github.com/SekoiaLab/platform/${branch} ${origin}
-}
-
-# jumpstart of the worktree feature. Need to improve this
-work() {
-  local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
-  local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
-  local depth=1
-  local args=$@
-  local dir=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --query "$args" --print-query | tail -n 1)
-  if [ ! -z $dir ]; then
-    if [ -d ${worktrees_dir}/$dir ]; then
-      cd ${worktrees_dir}/$dir
-      swaymsg rename workspace to "${dir}"
-    else
-      cd ${repo_dir}
-      git fetch -p
-      git worktree add ${worktrees_dir}/$dir -b $dir origin/$dir
-      if [ $? -eq 255 ]; then
-        git worktree add ${worktrees_dir}/$dir -b $dir origin/develop --no-track
-        if [ $? -eq 255 ]; then
-          git worktree add ${worktrees_dir}/$dir $dir
-        fi
-      fi
-      cd ${worktrees_dir}/$dir
-      swaymsg rename workspace to "${dir}"
-    fi
-  fi
-}
-
-# temporary endwork function just to jumpstart usage of this feature
-endwork() {
-  local worktrees_dir=/home/nrm/dev/git-trees/github.com/SekoiaLab/platform
-  local repo_dir=/home/nrm/dev/git/github.com/SekoiaLab/platform
-  local depth=1
-  local args=$@
-  if [ -z "${args}" ]; then args="$(git rev-parse --abbrev-ref HEAD)"; fi
-  local dir=$(fd . ${worktrees_dir} --type d --max-depth ${depth} --min-depth ${depth} | xargs -I {} basename {} | fzf --print-query --query "$args" --exit-0 | tail -n 1)
-  if [ ! -z $dir ]; then
-    if [ -d ${worktrees_dir}/$dir ]; then
-      pushd ${repo_dir}
-      git pull
-      git worktree remove $dir --force
-      git branch -D $dir
-      git remote update origin --prune
-      popd
-    fi
-  fi
 }
 
 
