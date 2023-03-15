@@ -122,7 +122,6 @@ endwork() {
     git worktree remove $dir --force
     git branch -D ${dir##${git_user}-${repo_name}-}
     git remote update origin --prune
-    popd
   fi
 }
 
