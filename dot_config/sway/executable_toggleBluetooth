@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 controller="E0:D4:64:01:AE:F4"
-device="7C:96:D2:8E:1F:BF"
+device="9D:33:92:14:59:AD"
 enabled="/home/nrm/.config/sway/Enabled.mp3"
 disabled="/home/nrm/.config/sway/Disabled.mp3"
 
