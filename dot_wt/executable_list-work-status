@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+for folder in $(fd --type d --maxdepth 1); do
+    pushd ${folder} 1>/dev/null;
+    res=$(gh pr view --json state 2>&1)
+    if [[ "${res}" = "no pull requests found for branch"* ]]; then
+        echo "[-] no PR for work \"${folder::-1}\""
+        popd 1>/dev/null;
+        continue
+    fi
+    popd 1>/dev/null;
+    case $(echo "${res}" | jq '.state' -r 2>/dev/null) in
+        MERGED)
+            echo "[+] PR \"${folder::-1}\" is merged";;
+        OPEN)
+            echo "[ ] PR \"${folder::-1} is opened\"";;
+        *)
+            ;;
+    esac
+done
