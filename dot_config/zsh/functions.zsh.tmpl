@@ -82,9 +82,9 @@ work() {
 
     git fetch -p
     git worktree add ${worktrees_dir}/${git_user}-${repo_name}-${dir} -b $dir origin/$dir
-    if [ $? -eq 255 ]; then
+    if [ $? -ne 0 ]; then
       git worktree add ${worktrees_dir}/${git_user}-${repo_name}-${dir} -b $dir origin/${main_branch} --no-track
-      if [ $? -eq 255 ]; then
+      if [ $? -ne 0 ]; then
         git worktree add ${worktrees_dir}/${git_user}-${repo_name}-${dir} $dir
       fi
     fi
