@@ -75,3 +75,7 @@ PROMPT=$PROMPT'$(kube_ps1) (%D{%y-%m-%dT%H:%M:%S%z}) '
 # fi
 
 source $HOME/.config/zsh/zshrc
+
+
+# load custom completion on aliases
+setopt completealiases
