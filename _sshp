@@ -1,0 +1,21 @@
+#compdef sshp
+_sshp_commandname="sshp"
+
+_sshp_servers () {
+    local cache
+    cache="/$HOME/.cache/${_sshp_commandname}-cache"
+    if [ -e "$cache" ] && [ "$(($(date +%s) - $(stat -c %Y "$cache")))" -lt "3600" ]; then
+        compadd ${(uo)$(cat "$cache")}
+    else
+        ssh -I /usr/lib/libykcs11.so fra1-production -- --osh groupListServers --group sre 2>/dev/null | awk -F'=' '/hostname/{print $2}' | sort -u > $cache
+        compadd ${(uo)$(cat "$cache")}
+    fi
+}
+
+_sshp() {
+    integer ret=1
+    _alternative 'servers:servers:_sshp_servers' && ret=0
+}
+
+_sshp
+
