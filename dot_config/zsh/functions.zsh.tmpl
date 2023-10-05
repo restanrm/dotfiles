@@ -126,14 +126,6 @@ endwork() {
 }
 
 {{- if .work }}
-function ssht(){
-  ssh -I /usr/lib/libykcs11.so adrien@141.94.167.154 -t -- $@
-}
-
-function sshp() {
-  ssh -I /usr/lib/libykcs11.so adrien@54.37.23.139 -t -- $@
-}
-
 function obs() {
   swaymsg rename workspace to 8
   /usr/bin/obs
