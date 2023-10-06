@@ -4,12 +4,12 @@ _sshp() {
 
     # Define function only when it doesn't exist
     (( $+functions[_sshp_cache_policy] )) || _sshp_cache_policy() {
-      # Cache invalidates after 5 minutes
+      # Cache invalidates after 1 hour
       #
       # Reference:
       #   https://zsh.sourceforge.net/Doc/Release/Expansion.html#index-globbing_002c-qualifiers
       local -a oldp
-      oldp=( "$1"(ms+300) )
+      oldp=( "$1"(ms+3600) )
       (( $#oldp ))
     }
 
@@ -60,12 +60,12 @@ _ssht() {
 
     # Define function only when it doesn't exist
     (( $+functions[_ssht_cache_policy] )) || _ssht_cache_policy() {
-      # Cache invalidates after 5 minutes
+      # Cache invalidates after 1 hour
       #
       # Reference:
       #   https://zsh.sourceforge.net/Doc/Release/Expansion.html#index-globbing_002c-qualifiers
       local -a oldp
-      oldp=( "$1"(ms+300) )
+      oldp=( "$1"(ms+3600) )
       (( $#oldp ))
     }
 
@@ -116,12 +116,12 @@ _bfra2() {
 
     # Define function only when it doesn't exist
     (( $+functions[_bfra2_cache_policy] )) || _bfra2_cache_policy() {
-      # Cache invalidates after 5 minutes
+      # Cache invalidates after 1 hour
       #
       # Reference:
       #   https://zsh.sourceforge.net/Doc/Release/Expansion.html#index-globbing_002c-qualifiers
       local -a oldp
-      oldp=( "$1"(ms+300) )
+      oldp=( "$1"(ms+3600) )
       (( $#oldp ))
     }
 
