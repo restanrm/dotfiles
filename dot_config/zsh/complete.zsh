@@ -166,3 +166,21 @@ _bfra2() {
 }
 
 compdef _bfra2 bfra2
+
+
+
+_bfra3() {
+    integer ret=1
+    local cache
+    cache="/$HOME/.cache/bfra3-cache"
+    if [ -e "$cache" ] && [ "$(($(date +%s) - $(/sbin/stat -c %Y "$cache")))" -lt "3600" ]; then
+        compadd ${(uo)$(cat "$cache")}
+    else
+        ssh -I /usr/lib/libykcs11.so fra2-production -- --osh groupListServers --group sre 2>/dev/null | awk -F'=' '/hostname/{print $2}' | sort -u > $cache
+        compadd ${(uo)$(cat "$cache")}
+    fi
+    _describe 'command' instances
+    _alternative 'servers:servers:_bfra3_servers' && ret=0
+}
+
+compdef _bfra3 bfra3
