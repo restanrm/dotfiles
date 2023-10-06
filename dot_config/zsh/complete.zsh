@@ -50,6 +50,7 @@ _sshp() {
         return
       fi
     fi
+    _describe 'command' instances
 }
 
 compdef _sshp sshp
@@ -106,6 +107,7 @@ _ssht() {
         return
       fi
     fi
+    _describe 'command' instances
 }
 
 compdef _ssht ssht
