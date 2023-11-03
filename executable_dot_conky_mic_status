@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # val content should be either 'mute' or 'unmute'
-val=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{printf("%s",($3 == "[MUTED]" ? "mute" : "unmute"))}'
+val=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{printf("%s",($3 == "[MUTED]" ? "mute" : "unmute"))})'
 
 if [ ${val} = "mute" ]; then
   printf "{\"name\":\"mic\",\"instance\":\"status\",\"full_text\":\"mic: ${val}\",\"color\":\"#ff0000\"}"
