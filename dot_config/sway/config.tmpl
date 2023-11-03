@@ -225,15 +225,15 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 10%+
 
 # control sound
-bindsym --locked XF86AudioRaiseVolume exec pulseaudio-ctl up
-bindsym --locked XF86AudioLowerVolume exec pulseaudio-ctl down
-bindsym --locked XF86AudioMute exec pulseaudio-ctl mute
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
 # control Music
 bindsym --locked XF86AudioPlay exec "playerctl play-pause"
 bindsym --locked XF86AudioPrev exec "playerctl previous"
 bindsym --locked XF86AudioNext exec "playerctl next"
-bindsym F9 exec pulseaudio-ctl mute-input
+bindsym F9 exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 bindsym $mod+l exec touch /tmp/passwdlock | gopass ls --flat | wofi --show dmenu | xargs --no-run-if-empty gopass show -c
 
