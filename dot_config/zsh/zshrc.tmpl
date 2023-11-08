@@ -22,4 +22,6 @@ fi
 #which gopass >/dev/null && source <(gopass completion zsh)
 which kubectl >/dev/null && source <(kubectl completion zsh)
 which minikube >/dev/null && source <(minikube completion zsh)
-
+{{- if .work }}
+which scw >/dev/null && source <(scw autocomplete script shell=zsh)
+{{- end }}
