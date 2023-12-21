@@ -240,7 +240,7 @@ bindsym $mod+l exec touch /tmp/passwdlock | gopass ls --flat | wofi --show dmenu
 # screenshots
 bindsym Print exec 'grim -g "$(slurp)" - | wl-copy'
 #bindsym Print --release exec "scrot -s /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
-#bindsym Shift+Print exec "scrot /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
+bindsym Shift+Print exec 'grim - | wl-copy'
 
 
 # floating windows
