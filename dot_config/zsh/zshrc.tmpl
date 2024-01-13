@@ -24,4 +24,7 @@ which kubectl >/dev/null && source <(kubectl completion zsh)
 which minikube >/dev/null && source <(minikube completion zsh)
 {{- if .work }}
 which scw >/dev/null && source <(scw autocomplete script shell=zsh)
+
+echo 'source <(switcher init zsh)' >> ~/.zshrc
+echo 'source <(compdef _switcher switch)' >> ~/.zshrc
 {{- end }}
