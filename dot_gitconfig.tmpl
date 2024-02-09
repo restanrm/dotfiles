@@ -41,7 +41,14 @@
 [user]
 	email = {{ .email }}
 	name = {{ .name }}
+  {{- if .work }}
+  signingKey = /home/nrm/.ssh/id_ed25519.pub
+  {{- else }}
+  signingKey = /home/nrm/.ssh/id_ecdsa.pub
+  {{- end }}
 	signingkey = 7FB60532DEBEAD6A
+[gpg]
+  format = ssh
 [push]
 	default = current
 [http]
