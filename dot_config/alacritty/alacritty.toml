@@ -23,7 +23,11 @@ background = "0x2E3440"
 foreground = "0xD8DEE9"
 
 [font]
+{{- if .work }}
+size = 9
+{{- else }}
 size = 10
+{{- end }}
 
 [[keyboard.bindings]]
 action = "CreateNewWindow"
