@@ -12,11 +12,11 @@ if !exists('g:vscode')
     nnoremap <leader>gb :Gblame<cr>
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
-    nnoremap <leader>lp :Files<cr>
-    nnoremap <leader>lb :Buffers<cr>
+    nnoremap <leader>fp :Files<cr>
+    nnoremap <leader>fb :Buffers<cr>
     nnoremap <leader>bd :bd<cr>
     nnoremap <leader>bb :b#<cr>
-    nnoremap <leader>ll :BLines<cr>
+    nnoremap <leader>fl :BLines<cr>
   Plug 'fatih/vim-go'
     nnoremap <leader>gr :GoRun<cr>
     nnoremap <leader>gb :GoBuild<cr>
@@ -49,16 +49,7 @@ if !exists('g:vscode')
   Plug 'tpope/vim-commentary'
   Plug 'rust-lang/rust.vim'
     let g:rustfmt_autosave = 1
-  Plug 'psf/black'
-    nnoremap <leader>pf :Black<cr>
-    let g:black_linelength = 119
-  Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
-    let g:LanguageClient_serverCommands = {
-        \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-        " need to install python-lsp-server archlinux package
-        \ 'python': ['/usr/bin/pylsp'],
-        \ }
-    nnoremap <F5> <Plug>(lcn-menu)
+  Plug 'neovim/nvim-lspconfig'
   call plug#end()
 endif
 
@@ -152,30 +143,48 @@ require("nvim-tree").setup({
   },
 })
 
-require("LanguageClient").setup(
-  pylsp = {
-    plugins = {
-      ruff = {
-        enabled = true,  -- Enable the plugin
-        formatEnabled = true,  -- Enable formatting using ruffs formatter
-        executable = "<path-to-ruff-bin>",  -- Custom path to ruff
-        config = "<path_to_custom_ruff_toml>",  -- Custom config for ruff to use
-        extendSelect = { "I" },  -- Rules that are additionally used by ruff
-        extendIgnore = { "C90" },  -- Rules that are additionally ignored by ruff
-        format = { "I" },  -- Rules that are marked as fixable by ruff that should be fixed when running textDocument/formatting
-        severities = { ["D212"] = "I" },  -- Optional table of rules where a custom severity is desired
-        unsafeFixes = false,  -- Whether or not to offer unsafe fixes as code actions. Ignored with the "Fix All" action
-
-        -- Rules that are ignored when a pyproject.toml or ruff.toml is present:
-        lineLength = 119,  -- Line length to pass to ruff checking and formatting
-        exclude = { "__about__.py" },  -- Files to be excluded by ruff checking
-        select = { "F" },  -- Rules to be enabled by ruff
-        ignore = { "D210" },  -- Rules to be ignored by ruff
-        perFileIgnores = { ["__init__.py"] = "CPY001" },  -- Rules that should be ignored for specific files
-        preview = false,  -- Whether to enable the preview style linting and formatting.
-        targetVersion = "py310",  -- The minimum python version to target (applies for both linting and formatting).
-      },
+local lspconfig = require('lspconfig')
+lspconfig.pylsp.setup{
+  settings = {
+    pylsp = {
+      plugins = {
+        ruff = {
+          lineLength = 119
+        }
+      }
     }
   }
-)
+}
+
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '<leader>le', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist)
+
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', '<leader>lD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', '<leader>ld', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', '<leader>lk', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<leader>li', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>lc', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>lf', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+
 EOF
