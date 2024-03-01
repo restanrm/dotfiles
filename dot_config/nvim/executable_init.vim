@@ -42,8 +42,8 @@ if !exists('g:vscode')
 "    nnoremap <leader>nf :NERDTreeFind
   Plug 'mbbill/undotree'
   Plug 'nvim-tree/nvim-tree.lua'
-    nnoremap <leader>nn :NvimTreeToggle
-    nnoremap <leader>nf :NvimTreeFindFile
+    nnoremap <leader>tt :NvimTreeToggle
+    nnoremap <leader>tf :NvimTreeFindFile
   Plug 'junegunn/vim-easy-align'
     vmap <Leader><bar> :EasyAlign*<bar><enter>
   Plug 'tpope/vim-commentary'
