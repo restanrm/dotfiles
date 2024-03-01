@@ -12,7 +12,7 @@ if !exists('g:vscode')
     nnoremap <leader>gb :Gblame<cr>
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
-    nnoremap <leader>fp :Files<cr>
+    nnoremap <leader>ff :Files<cr>
     nnoremap <leader>fb :Buffers<cr>
     nnoremap <leader>bd :bd<cr>
     nnoremap <leader>bb :b#<cr>
