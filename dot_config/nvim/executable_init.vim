@@ -55,7 +55,8 @@ if !exists('g:vscode')
   Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
     let g:LanguageClient_serverCommands = {
         \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-        \ 'python': ['/usr/local/bin/pyls'],
+        " need to install python-lsp-server archlinux package
+        \ 'python': ['/usr/bin/pylsp'],
         \ }
     nnoremap <F5> <Plug>(lcn-menu)
   call plug#end()
@@ -150,4 +151,31 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
+
+require("LanguageClient").setup(
+  pylsp = {
+    plugins = {
+      ruff = {
+        enabled = true,  -- Enable the plugin
+        formatEnabled = true,  -- Enable formatting using ruffs formatter
+        executable = "<path-to-ruff-bin>",  -- Custom path to ruff
+        config = "<path_to_custom_ruff_toml>",  -- Custom config for ruff to use
+        extendSelect = { "I" },  -- Rules that are additionally used by ruff
+        extendIgnore = { "C90" },  -- Rules that are additionally ignored by ruff
+        format = { "I" },  -- Rules that are marked as fixable by ruff that should be fixed when running textDocument/formatting
+        severities = { ["D212"] = "I" },  -- Optional table of rules where a custom severity is desired
+        unsafeFixes = false,  -- Whether or not to offer unsafe fixes as code actions. Ignored with the "Fix All" action
+
+        -- Rules that are ignored when a pyproject.toml or ruff.toml is present:
+        lineLength = 119,  -- Line length to pass to ruff checking and formatting
+        exclude = { "__about__.py" },  -- Files to be excluded by ruff checking
+        select = { "F" },  -- Rules to be enabled by ruff
+        ignore = { "D210" },  -- Rules to be ignored by ruff
+        perFileIgnores = { ["__init__.py"] = "CPY001" },  -- Rules that should be ignored for specific files
+        preview = false,  -- Whether to enable the preview style linting and formatting.
+        targetVersion = "py310",  -- The minimum python version to target (applies for both linting and formatting).
+      },
+    }
+  }
+)
 EOF
