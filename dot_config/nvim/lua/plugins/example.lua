@@ -20,7 +20,7 @@ return {
     },
   },
 
-  -- change trouble config
+  -- change trouble cg
   {
     "folke/trouble.nvim",
     -- opts will be merged with the parent spec
