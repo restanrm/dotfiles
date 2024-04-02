@@ -145,5 +145,9 @@ osctx () {
   source <(gopass ls --flat | grep openrc.sh | wofi --show dmenu | xargs --no-run-if-empty gopass show -n)
 }
 
+vlog () {
+    vault token lookup 1>/dev/null 2>&1 || vault login -method=oidc 1>/dev/null 2>&1 
+}
+
 
 {{- end }}
