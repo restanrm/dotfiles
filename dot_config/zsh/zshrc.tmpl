@@ -28,5 +28,5 @@ which scw >/dev/null && source <(scw autocomplete script shell=zsh)
 source <(switcher init zsh)
 source <(compdef _switcher switch)
 
-ping -W1 -c1 8.8.8.8 1>/dev/null 2>&1 && switch . 1>/dev/null 2>&1 || vlog
+ping -W1 -c1 8.8.8.8 1>/dev/null 2>&1 && (switch . 1>/dev/null 2>&1 || vlog && switch .)
 {{- end }}
