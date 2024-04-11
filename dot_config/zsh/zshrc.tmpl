@@ -28,5 +28,18 @@ which scw >/dev/null && source <(scw autocomplete script shell=zsh)
 source <(switcher init zsh)
 source <(compdef _switcher switch)
 
-ping -W1 -c1 8.8.8.8 1>/dev/null 2>&1 && (switch . 1>/dev/null 2>&1 || vlog && switch .)
+func init_switch () {
+  # if ping ok continue else stop
+  ping -W1 -c1 8.8.8.8 >/dev/null 2>&1 || (echo "No internet connection"; return )
+
+  # if switch ok return else login to vault and restart
+  switch . >/dev/null 2>&1 && return
+
+  # login to vault
+  vault token lookup >/dev/null 2>&1 || vault login -method=oidc >/dev/null 2>&1
+
+  switch . >/dev/null 2>&1 || (echo "Unknown error")
+}
+init_switch
+
 {{- end }}
