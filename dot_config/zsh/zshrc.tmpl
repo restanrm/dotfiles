@@ -30,7 +30,7 @@ source <(compdef _switcher switch)
 
 func init_switch () {
   # if ping ok continue else stop
-  ping -W1 -c1 8.8.8.8 >/dev/null 2>&1 || return 1;
+  ping -W1 -c1 8.8.8.8 >/dev/null 2>&1 || { echo "No internet connection"; return 1;}
 
   # if switch ok return else login to vault and restart
   switch . >/dev/null 2>&1 && return 0
