@@ -146,8 +146,7 @@ osctx () {
 }
 
 vlog () {
-    ping -W 1 -c 1 8.8.8.8 && vault token lookup 1>/dev/null 2>&1 || vault login -method=oidc 1>/dev/null 2>&1 
+  vault token lookup 1>/dev/null 2>&1 || vault login -method=oidc 1>/dev/null 2>&1 
 }
-
 
 {{- end }}
