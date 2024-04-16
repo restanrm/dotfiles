@@ -33,7 +33,7 @@ func init_switch () {
   ping -W1 -c1 8.8.8.8 >/dev/null 2>&1 || (echo "No internet connection"; return )
 
   # if switch ok return else login to vault and restart
-  switch . >/dev/null 2>&1 && (echo "Not possible to switch "; return)
+  switch . >/dev/null 2>&1 && return
 
   # login to vault
   vault token lookup >/dev/null 2>&1 || vault login -method=oidc >/dev/null 2>&1
