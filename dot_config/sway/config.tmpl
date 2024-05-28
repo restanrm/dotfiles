@@ -236,7 +236,7 @@ bindsym --locked XF86AudioNext exec "playerctl next"
 bindsym F9 exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 bindsym $mod+l exec touch /tmp/passwdlock | gopass ls --flat | wofi --show dmenu | xargs --no-run-if-empty gopass show -c
-bindsym $mod+j exec touch /tmp/passwdlock | bwmenu
+bindsym $mod+j exec touch /tmp/passwdlock | bwmenu --auto-lock 86400
 
 # screenshots
 bindsym Print exec 'grim -g "$(slurp)" - | wl-copy'
