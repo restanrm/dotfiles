@@ -3,3 +3,6 @@
 -- Add any additional options here
 local opt = vim.opt
 opt.wrap = true
+
+vim.cmd("set textwidth=119")
+vim.cmd("set colorcolumn=+1")
