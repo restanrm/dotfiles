@@ -31,15 +31,15 @@ function pdftk() {
 }
 
 # new kctx function
-if [ -f ~/.kube.env ]; then source ~/.kube.env; fi
-kctx() {
-  local args=$1
-  conf=$HOME/.kube/configs/$(ls $HOME/.kube/configs | fzf --query "${args}" --select-1 --exit-0)
-  if [ -f "${conf}" ]; then
-    export KUBECONFIG="${conf}"
-    echo "export KUBECONFIG=${conf}" > $HOME/.kube.env
-  fi
-}
+# if [ -f ~/.kube.env ]; then source ~/.kube.env; fi
+# kctx() {
+#   local args=$1
+#   conf=$HOME/.kube/configs/$(ls $HOME/.kube/configs | fzf --query "${args}" --select-1 --exit-0)
+#   if [ -f "${conf}" ]; then
+#     export KUBECONFIG="${conf}"
+#     echo "export KUBECONFIG=${conf}" > $HOME/.kube.env
+#   fi
+# }
 
 kex() {
   pod=$(kubectl get pod -o wide | grep Running | fzf --exit-0 --select-1 | awk '{print $1}')
