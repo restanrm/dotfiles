@@ -14,4 +14,5 @@ return {
       show_hidden = true,
     },
   },
+  lazy = false,
 }
