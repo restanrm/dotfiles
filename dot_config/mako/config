@@ -1,5 +1,5 @@
 # documentation : man 5 mako
 
 default-timeout=60000
-anchor=bottom-right
+anchor=bottom-left
 border-radius=5
