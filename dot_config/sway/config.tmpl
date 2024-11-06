@@ -292,7 +292,7 @@ exec wl-paste -p -t text --watch /home/nrm/.config/sway/myclipman store -P
 bindsym $mod+p exec "clipman pick -t wofi"
 bindsym $mod+Shift+p exec "clipman clear -t wofi"
 
-bindsym F7 exec 'PID_FILE=/tmp/.ydotool_pid; [ -f $PID_FILE ] && kill $(< $PID_FILE) && rm $PID_FILE || ( (while true; do ydotool click c0; done & echo $! > $PID_FILE) )'
+bindsym F7 exec bash -c 'PID_FILE=/tmp/.ydotool_pid; [ -f $PID_FILE ] && kill $(< $PID_FILE) && rm $PID_FILE || ( (while true; do ydotool click c0; done & echo $! > $PID_FILE) )'
 
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec swayidle -w timeout 300 'swaylock -f -c 40A497'
