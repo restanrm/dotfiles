@@ -21,23 +21,30 @@ return {
       {
         "<leader>h",
         function()
-          local file_paths = {}
-          local conf = require("telescope.config").values
-          for _, item in ipairs(require("harpoon"):list().items) do
-            table.insert(file_paths, item.value)
-          end
-          require("telescope.pickers")
-            .new({}, {
-              prompt_title = "Harpoon",
-              finder = require("telescope.finders").new_table({
-                results = file_paths,
-              }),
-              previewer = conf.file_previewer({}),
-              sorter = conf.generic_sorter({}),
-            })
-            :find()
+          local harpoon = require("harpoon")
+          harpoon.ui:toggle_quick_menu(harpoon:list())
         end,
       },
+      -- {
+      --   "<leader>h",
+      --   function()
+      --     local file_paths = {}
+      --     local conf = require("telescope.config").values
+      --     for _, item in ipairs(require("harpoon"):list().items) do
+      --       table.insert(file_paths, item.value)
+      --     end
+      --     require("telescope.pickers")
+      --       .new({}, {
+      --         prompt_title = "Harpoon",
+      --         finder = require("telescope.finders").new_table({
+      --           results = file_paths,
+      --         }),
+      --         previewer = conf.file_previewer({}),
+      --         sorter = conf.generic_sorter({}),
+      --       })
+      --       :find()
+      --   end,
+      -- },
     }
 
     for i = 1, 5 do
