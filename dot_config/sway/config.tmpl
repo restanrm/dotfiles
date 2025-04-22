@@ -253,7 +253,7 @@ bindsym $mod+b exec /home/nrm/.config/sway/toggleBluetooth
 {{- end }}
 
 # assign windows to workspace
-assign [class="Chromium"] $w8
+assign [class="Chromium"] $w1
 assign [title=".*FFW9.*"] $w9
 assign [title=".*FFW1.*"] $w1
 assign [title="Sharing Indicator"] $w10
@@ -272,10 +272,11 @@ exec mako
 
 {{- if .work }}
 exec "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-exec firefox -p work
+#exec firefox -p work
 exec /home/nrm/.config/sway/headset.sh
 {{- else if eq .chezmoi.hostname "intercepteur" }}
-exec firefox
+exec "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+exec chromium
 # exec /home/nrm/.config/sway/shvnc/shvnc
 {{- end }}
 
