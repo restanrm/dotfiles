@@ -149,4 +149,10 @@ vlog () {
   vault token lookup 1>/dev/null 2>&1 || vault login -method=oidc 1>/dev/null 2>&1 
 }
 
+function horizon-client() {
+  unset MOZ_ENABLE_WAYLAND
+  unset WAYLAND_DISPLAY
+  /usr/bin/horizon-client
+}
+
 {{- end }}
