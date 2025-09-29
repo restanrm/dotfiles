@@ -53,7 +53,7 @@ return {
       { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
       { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
       { "<leader>ae", ":CopilotChatExplain<CR>", desc = "Explain Code" },
-      { "<leader>ac", ":CopilotChatCommit<CR>", desc = "Generate commit description" },
+      { "<leader>ac", ":CopilotChatCustomCommit<CR>", desc = "Generate commit description" },
       { "<leader>at", ":CopilotChatTests<CR>", desc = "Generate Tests" },
       { "<leader>ad", ":CopilotChatDocs<CR>", desc = "Generate documentation" },
       {
