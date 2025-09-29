@@ -38,13 +38,24 @@ return {
     --     },
     --   }
     -- end,
+    opts = {
+      prompts = {
+        CustomCommit = {
+          prompt = "Write commit message for change with commitizen convention. Keep the title under 50 characters and wrap message at 72 characters. Format as a gitcommit code block.",
+          resources = {
+            "gitstatus",
+          },
+        },
+      },
+    },
+
     keys = {
       { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
       { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
-      { "<leader>ae", ":CopilotChatExplain", desc = "Explain Code" },
-      { "<leader>ac", ":CopilotChatCommit", desc = "Generate commit description" },
-      { "<leader>at", ":CopilotChatTests", desc = "Generate Tests" },
-      { "<leader>ad", ":CopilotChatDocs", desc = "Generate documentation" },
+      { "<leader>ae", ":CopilotChatExplain<CR>", desc = "Explain Code" },
+      { "<leader>ac", ":CopilotChatCommit<CR>", desc = "Generate commit description" },
+      { "<leader>at", ":CopilotChatTests<CR>", desc = "Generate Tests" },
+      { "<leader>ad", ":CopilotChatDocs<CR>", desc = "Generate documentation" },
       {
         "<leader>aa",
         function()
