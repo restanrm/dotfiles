@@ -1,13 +1,15 @@
 return {
-  'stevearc/oil.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  "stevearc/oil.nvim",
+  dependencies = { { "nvim-mini/mini.icons", opts = {} } },
   keys = {
-    { '<leader>o',
-    function()
-      require('oil').open()
-    end,
-    desc = '[F]ormat buffer', },
-    {'-', "<CMD>Oil<CR>", desc="Open parent directory" }
+    {
+      "<leader>o",
+      function()
+        require("oil").open()
+      end,
+      desc = "[F]ormat buffer",
+    },
+    { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
   },
   opts = {
     default_file_explorer = true,
