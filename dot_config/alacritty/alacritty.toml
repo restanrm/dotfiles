@@ -24,6 +24,7 @@ foreground = "0xD8DEE9"
 
 [font]
 size = 9
+normal = { family = "NotoSansM Nerd Font", style = "Regular"}
 
 [[keyboard.bindings]]
 action = "CreateNewWindow"
