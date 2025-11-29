@@ -1,23 +1,6 @@
 return {
   {
     "github/copilot.vim",
-    enabled = false, -- copilot is disabled by default
-    keys = {
-      {
-        "<leader>ct",
-        function()
-          if vim.g.copilot_enabled == 1 then
-            vim.g.copilot_enabled = 0
-            vim.cmd("Copilot disable")
-          else
-            vim.g.copilot_enabled = 1
-            vim.cmd("Copilot enable")
-          end
-        end,
-        desc = "Toggle GitHub Copilot",
-        mode = { "n", "v" },
-      },
-    },
   },
   --   "zbirenbaum/copilot.lua",
   --   cmd = "Copilot",
