@@ -199,16 +199,10 @@ input 1739:30385:CUST0001:00_06CB:76B1_Touchpad {
   tap enabled
 }
 
-{{- if eq .chezmoi.hostname "intercepteur" }}
 input type:keyboard {
   xkb_layout fr(bepo)
 }
 bindsym $mod+space exec /home/nrm/.config/sway/keymap.sh
-{{- else }}
-input type:keyboard {
-  xkb_layout fr(bepo)
-}
-{{- end }}
 
 # lockscreen
 bindsym control+$mod+l exec $lock
