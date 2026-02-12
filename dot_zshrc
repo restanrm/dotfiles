@@ -53,7 +53,7 @@ ZSH_CACHE_DIR=$HOME/.cache/zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git jump pass ssh-agent extract kube-ps1 direnv zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git jump pass ssh-agent extract kube-ps1 direnv)
 
 zstyle :omz:plugins:ssh-agent agent-forwarding yes
 
